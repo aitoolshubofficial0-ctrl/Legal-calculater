@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Fee & Injury Settlement Payout Estimator (Free Calculator)</title>
+    <meta name="description" content="Free online personal injury settlement calculator. Calculate estimated car accident payouts, medical bill multipliers, and lawyer fees instantly.">
+    <meta name="keywords" content="settlement calculator, injury payout estimator, car accident payout, legal fee calculator, injury claim multiplier">
+    
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:title" content="Legal Fee & Injury Settlement Payout Estimator">
+    <meta property="og:description" content="Estimate your personal injury claim payout instantly with our free online calculator.">
+    <meta property="og:type" content="website">
+
+    <!-- Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-blue-900 text-white p-6 shadow-lg">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-2xl md:text-3xl font-bold">Injury Settlement & Legal Fee Estimator</h1>
+            <p class="text-blue-200 text-sm mt-1">Estimate your claim payout based on medical costs, lost wages, and injury multipliers.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto p-4 md:p-6 my-6">
+        
+        <!-- Calculator Card -->
+        <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <h2 class="text-xl font-semibold mb-4 text-blue-900 border-b pb-2">Settlement Calculator</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Inputs -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Medical Bills ($)</label>
+                    <input type="number" id="medical" value="5000" class="w-full p-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Property Damage / Other Costs ($)</label>
+                    <input type="number" id="property" value="2000" class="w-full p-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Lost Wages ($)</label>
+                    <input type="number" id="wages" value="1500" class="w-full p-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Injury Severity Multiplier (1.5x - 5x)</label>
+                    <select id="multiplier" class="w-full p-2 border rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="1.5">1.5x - Minor Injuries (Soft tissue, bruises)</option>
+                        <option value="2">2.0x - Moderate Injuries (Sprains, minor cuts)</option>
+                        <option value="3" selected>3.0x - Severe Injuries (Broken bones, deep lacerations)</option>
+                        <option value="4">4.0x - Very Severe Injuries (Surgery required)</option>
+                        <option value="5">5.0x - Permanent / Life-altering Injuries</option>
+                    </select>
+
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Estimated Legal/Attorney Fee (%)</label>
+                    <input type="number" id="lawyerFee" value="33" class="w-full p-2 border rounded-lg mb-4 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                    <button onclick="calculateSettlement()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-lg transition duration-200">
+                        Calculate Settlement Payout
+                    </button>
+                </div>
+
+                <!-- Results Output -->
+                <div class="bg-blue-50 p-5 rounded-lg border border-blue-100 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-blue-900 mb-3">Estimated Breakdown</h3>
+                        
+                        <div class="flex justify-between py-2 border-b border-blue-200">
+                            <span class="text-gray-600">Economic Damages:</span>
+                            <span id="economicOut" class="font-semibold">$8,500</span>
+                        </div>
+
+                        <div class="flex justify-between py-2 border-b border-blue-200">
+                            <span class="text-gray-600">Non-Economic (Pain & Suffering):</span>
+                            <span id="nonEconomicOut" class="font-semibold">$15,000</span>
+                        </div>
+
+                        <div class="flex justify-between py-2 border-b border-blue-200 text-lg font-bold text-gray-900">
+                            <span>Total Estimated Settlement:</span>
+                            <span id="totalOut" class="text-blue-800">$23,500</span>
+                        </div>
+
+                        <div class="flex justify-between py-2 border-b border-blue-200 text-sm text-gray-600">
+                            <span>Estimated Attorney Fee:</span>
+                            <span id="attorneyOut">$7,755</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t-2 border-blue-300">
+                        <p class="text-xs text-gray-500 uppercase font-bold">Estimated Take-Home Amount</p>
+                        <p id="takeHomeOut" class="text-3xl font-extrabold text-green-700">$15,745</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Content Section -->
+        <section class="mt-8 bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">
+            <h2 class="text-xl font-bold text-gray-800">How Personal Injury Settlements Are Calculated</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+                When estimating a personal injury settlement, insurance adjusters typically divide damages into two main categories: <strong>economic damages</strong> (tangible expenses like medical bills and lost wages) and <strong>non-economic damages</strong> (pain and suffering).
+            </p>
+            
+            <h3 class="text-lg font-semibold text-gray-800">Understanding the Multiplier Method</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+                The multiplier method multiplies your total economic damages by a factor ranging between 1.5 and 5, depending on the severity of the injury, recovery duration, and impact on daily life.
+            </p>
+
+            <div class="p-4 bg-yellow-50 border-l-4 border-yellow-400 text-xs text-yellow-800 rounded">
+                <strong>Disclaimer:</strong> This calculator provides rough estimates for informational purposes only. It does not constitute legal advice. Consult a licensed attorney to evaluate your specific legal claim.
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-gray-500 border-t bg-white mt-8">
+        <p>© 2026 Legal Settlement Estimator Tool. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Calculation Script -->
+    <script>
+        function calculateSettlement() {
+            const medical = parseFloat(document.getElementById('medical').value) || 0;
+            const property = parseFloat(document.getElementById('property').value) || 0;
+            const wages = parseFloat(document.getElementById('wages').value) || 0;
+            const mult = parseFloat(document.getElementById('multiplier').value) || 1.5;
+            const lawyerPercent = parseFloat(document.getElementById('lawyerFee').value) || 0;
+
+            const economic = medical + property + wages;
+            const nonEconomic = (medical + wages) * mult;
+            const total = economic + nonEconomic;
+            const lawyerFee = total * (lawyerPercent / 100);
+            const takeHome = total - lawyerFee;
+
+            document.getElementById('economicOut').innerText = '$' + economic.toLocaleString();
+            document.getElementById('nonEconomicOut').innerText = '$' + nonEconomic.toLocaleString();
+            document.getElementById('totalOut').innerText = '$' + total.toLocaleString();
+            document.getElementById('attorneyOut').innerText = '$' + lawyerFee.toLocaleString(undefined, {maximumFractionDigits: 0});
+            document.getElementById('takeHomeOut').innerText = '$' + takeHome.toLocaleString(undefined, {maximumFractionDigits: 0});
+        }
+        
+        // Initial Calculation on load
+        calculateSettlement();
+    </script>
+</body>
+</html>
