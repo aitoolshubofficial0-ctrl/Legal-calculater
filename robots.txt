@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aitoolshubofficial0-ctrl.github.io/Legal-calculater/sitemap.xml
